@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "ElasticSearch based session engine for Dancer",
+  "ABSTRACT" => "L<ElasticSearch> based session engine for Dancer",
   "AUTHOR" => "Big Angry Blue Fish <babf\@cpan.org>",
   "BUILD_REQUIRES" => {
     "Test::More" => 0
@@ -30,7 +30,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.002",
+  "VERSION" => "0.003",
   "test" => {
     "TESTS" => "t/*.t"
   }

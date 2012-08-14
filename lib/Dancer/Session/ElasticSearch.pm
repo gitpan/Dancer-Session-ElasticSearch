@@ -8,7 +8,7 @@ use Dancer qw(:syntax);
 use ElasticSearch;
 use Try::Tiny;
 
-our $VERSION = 0.002;
+our $VERSION = 0.003;
 
 our $es;
 
@@ -73,7 +73,7 @@ __END__
 
 =head1 NAME
 
-Dancer::Session::ElasticSearch - ElasticSearch based session engine for Dancer
+Dancer::Session::ElasticSearch - L<ElasticSearch> based session engine for Dancer
 
 =head1 SYNOPSIS
 
@@ -85,11 +85,14 @@ ElasticSearch index.
 In config.yml
 
   session:       "ElasticSearch"
-  session_index: "session" # defaults to "session"
+  session_options:
+    connection:
+    ... settings to pass to L<ElasticSearch>
+    index: "my_index" # defaults to "session"
+    type:  "my_session" # defaults to "session"
 
-This session engine will not automagically remove expired sessions on the
-server, but as it's ElasticSearch you know when sessions were last updated
-from the in-built timestamp on documents.
+This session engine will not remove expired sessions on the server, but as it's
+ElasticSearch you know when sessions were last updated from the document timestamp.
 
 =head1 METHODS
 
@@ -117,9 +120,13 @@ Remove the current session object from ES
 
 Connect to ElasticSearch and returns a handle
 
+=head1 FORK ME
+
+Fork a copy for yourself from L<https://github.com/babf/Dancer-Session-ElasticSearch>
+
 =head1 SEE ALSO
 
-L<Dancer>, L<Dancer::Session>, L<Plack::Session::Store::DBI>
+L<Dancer>, L<Dancer::Session>
 
 =cut
 
