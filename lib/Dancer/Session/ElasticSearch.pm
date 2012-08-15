@@ -8,7 +8,7 @@ use Dancer qw(:syntax);
 use ElasticSearch;
 use Try::Tiny;
 
-our $VERSION = 0.004;
+our $VERSION = 0.005;
 
 our $es;
 
@@ -33,7 +33,8 @@ sub retrieve {
     my ( $self, $session_id ) = @_;
 
     my $res = try {
-        $self->_es->get( id => $session_id, ignore_missing => 1 )->{_source};
+        my $get = $self->_es->get( id => $session_id, ignore_missing => 1 );
+        return defined $get ? $get->{_source} : undef;
     }
     catch {
         warning("Could not retrieve session ID $session_id - $_");
