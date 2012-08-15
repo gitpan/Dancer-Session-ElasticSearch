@@ -16,9 +16,10 @@ name: Dancer-Session-ElasticSearch
 requires:
   Dancer: 0
   Dancer::Session::Abstract: 0
+  Digest::HMAC_SHA1: 0
   ElasticSearch: 0
   Try::Tiny: 0
   base: 0
   strict: 0
   warnings: 0
-version: 0.007
+version: 0.008

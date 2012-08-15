@@ -24,13 +24,14 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Dancer" => 0,
     "Dancer::Session::Abstract" => 0,
+    "Digest::HMAC_SHA1" => 0,
     "ElasticSearch" => 0,
     "Try::Tiny" => 0,
     "base" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.007",
+  "VERSION" => "0.008",
   "test" => {
     "TESTS" => "t/*.t"
   }
