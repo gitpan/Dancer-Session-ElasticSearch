@@ -8,24 +8,27 @@ use Dancer qw(:syntax);
 use ElasticSearch;
 use Try::Tiny;
 
-our $VERSION = 0.005;
+our $VERSION = 0.006;
 
 our $es;
 
 sub create {
     my $self = __PACKAGE__->new;
 
-    $self->flush;
+    my $data = {%$self};
+    my $id   = $self->_es->index( data => $data )->{_id};
+
+    $self->id($id);
 
     return $self;
 }
 
 sub flush {
     my $self = shift;
-    my $data = {%$self};
-    my $id   = $data->{id};
 
-    $self->_es->index( data => $data, id => $id );
+    my $data = {%$self};
+
+    $self->_es->index( data => $data, id => $self->id );
     return $self;
 }
 
@@ -41,6 +44,8 @@ sub retrieve {
         return;
     };
 
+    $res->{id} = $session_id;
+
     return bless $res, __PACKAGE__ if $res;
 }
 
@@ -48,11 +53,15 @@ sub destroy {
     my $self = shift;
     try {
         $self->_es->delete( id => $self->id );
+        $self->write_session_id(0);
+        delete $self->{id};
     } catch {
         warning("Could not delete session ID " . $self->id . " - $_");
         return;
     };
 }
+
+sub init { }
 
 sub _es {
 
@@ -120,6 +129,11 @@ Remove the current session object from ES
 =head2 _es
 
 Connect to ElasticSearch and returns a handle
+
+=head2 _es
+
+Overload the init method in L<Dancer::Session::Abstract> to C<not> create an ID
+as we will use the ElasticSearch ID instead.
 
 =head1 FORK ME
 
