@@ -3,7 +3,6 @@ MANIFEST
 META.yml
 Makefile.PL
 README
-README.md
 dist.ini
 lib/Dancer/Session/ElasticSearch.pm
 t/001_base.t

@@ -8,7 +8,7 @@ use Dancer qw(:syntax);
 use ElasticSearch;
 use Try::Tiny;
 
-our $VERSION = 0.006;
+our $VERSION = 0.007;
 
 our $es;
 
