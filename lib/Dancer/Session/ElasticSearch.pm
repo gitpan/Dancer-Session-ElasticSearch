@@ -9,7 +9,7 @@ use ElasticSearch;
 use Try::Tiny;
 use Digest::HMAC_SHA1 qw();
 
-our $VERSION = 1.000;
+our $VERSION = 1.001;
 our $es;
 
 BEGIN {
@@ -85,7 +85,8 @@ sub retrieve {
 sub destroy {
     my $self = shift;
     try {
-        $self->_es->delete( id => $self->id );
+        my $id = $self->_verify($self->id);
+        $self->_es->delete( id => $id );
         $self->write_session_id(0);
         delete $self->{id};
     }

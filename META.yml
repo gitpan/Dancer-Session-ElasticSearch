@@ -22,4 +22,4 @@ requires:
   base: 0
   strict: 0
   warnings: 0
-version: 1
+version: 1.001
