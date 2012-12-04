@@ -12,6 +12,7 @@ my %WriteMakefileArgs = (
   "ABSTRACT" => "L<ElasticSearch> based session engine for Dancer",
   "AUTHOR" => "Big Angry Blue Fish <babf\@cpan.org>",
   "BUILD_REQUIRES" => {
+    "ElasticSearch::TestServer" => 0,
     "Test::More" => 0
   },
   "CONFIGURE_REQUIRES" => {
@@ -31,7 +32,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "1.001",
+  "VERSION" => "1.002",
   "test" => {
     "TESTS" => "t/*.t"
   }

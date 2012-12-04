@@ -9,33 +9,8 @@ use ElasticSearch;
 use Try::Tiny;
 use Digest::HMAC_SHA1 qw();
 
-our $VERSION = 1.001;
+our $VERSION = 1.002;
 our $es;
-
-BEGIN {
-
-    my $settings = setting('session_options');
-    my $es = ElasticSearch->new( %{ $settings->{connection} } );
-
-    my $index    = $settings->{index} // 'session';
-    my $ttl      = $settings->{ttl} // "1d";
-
-    unless ( $es->index_exists( index => $index ) ) {
-
-        $es->create_index(
-            index   => $index,
-            mappings => {
-                session   => {
-                    "_all" => { "enabled" => 0 },
-                    "_ttl" => { "enabled" => 1, "default" => $ttl },
-                    enabled => 0,
-                }
-            }
-        );
-
-        info "Created $index ElasticSearch index";
-    }
-}
 
 sub create {
     my $self = __PACKAGE__->new;
@@ -54,7 +29,7 @@ sub flush {
     my $data = {%$self};
     try {
         my $id   = $self->_verify( $self->id );
-        $self->_es->index( data => $data, id => $id,  );
+        $self->_es->index( data => $data, id => $id );
     }
     catch {
         warning("Could not flush session ID ". $self->id . " - $_");
@@ -85,8 +60,7 @@ sub retrieve {
 sub destroy {
     my $self = shift;
     try {
-        my $id = $self->_verify($self->id);
-        $self->_es->delete( id => $id );
+        $self->_es->delete( id => $self->id );
         $self->write_session_id(0);
         delete $self->{id};
     }
@@ -161,8 +135,7 @@ Dancer::Session::ElasticSearch - L<ElasticSearch> based session engine for Dance
 =head1 SYNOPSIS
 
 This module implements a session engine storing session variables in an
-ElasticSearch index. It also signs IDs to thwart tampering and guessing, and
-will automatically create the ES index if it doesn't exist yet.
+ElasticSearch index. It also signs IDs to thwart tampering and guessing.
 
 =head1 USAGE
 
@@ -171,17 +144,16 @@ In config.yml
   session:       "ElasticSearch"
   session_options:
     connection:
-                                    # passed directly to ElasticSearch
-    index: "my_index"               # ES index to use. defaults to "session"
-    type:  "my_session"             # defaults to "session"
+    ... settings to pass to ElasticSearch
+    index: "my_index" # defaults to "session"
+    type:  "my_session" # defaults to "session"
     signing:
         secret: "ldjaldjaklsdanm.m" # required for signing IDs
-        length: 10                  # length of salt and hash. defaults to 10
-    ttl: 1d                         # used if we create the index. defaults 1d.
+        length: 10 # length of the salt and hash. defaults to 10
 
-As this is ElasticSearch you can set a ttl on the documents when you create
-your ES index and let it do the work for you. Or let this package create the
-index and it will be set up with a default ttl for you.
+This session engine will not remove expired sessions on the server, but as it's
+ElasticSearch you can set a ttl on the documents when you create your ES index
+and let ES do the work for you.
 
 =head1 METHODS
 
