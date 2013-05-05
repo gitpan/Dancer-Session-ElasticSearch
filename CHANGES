@@ -1,6 +1,5 @@
-1.002		- Make tests use a configurable test server and bail if not found
-
-0.009 - 1.001   - Documentation
+1.003           - Add support for faster sessions (don't hit ES for every
+                  get or set - just once for each retrieve & flush cycle
 
 0.008           - Added signing of the session ID to make it tamper-proof
 
