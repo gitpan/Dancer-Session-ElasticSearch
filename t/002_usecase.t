@@ -10,7 +10,28 @@ use ElasticSearch::TestServer;
 our $es;
 
 {
-    $ENV{ES_HOME}      ||= '/usr/share/elasticsearch/';
+    unless ( $ENV{ES_HOME} ) {
+        diag "Trying to guess the location of your ElasticSearch binary.\nYou can skip this by setting the ES_HOME environment variable.";
+        my @suspects = qw( /opt/elasticsearch/
+                           /etc/elasticsearch/
+                           /usr/sbin/elasticsearch/
+                           /usr/local/bin/elasticsearch/
+                           /usr/share/elasticsearch/
+                       );
+        for my $path (@suspects) {
+            diag "Is it in '$path'?";
+            if ( -f "${path}bin/elasticsearch" ) {
+                diag "Looks like it is!";
+                $ENV{ES_HOME} = $path;
+                last;
+            }
+        }
+    }
+
+    unless ( $ENV{ES_HOME} ) {
+        plan skip_all => '$ENV{ES_HOME} not set - Need to know where your ElasticSearch binary is';
+    }
+
     $ENV{ES_PORT}      ||= '9400';
     $ENV{ES_INSTANCES} ||= 1;
     $ENV{ES_IP}        ||= '127.0.0.1';
@@ -36,9 +57,10 @@ set 'session_options' => {
     signing => {
         secret => "lkjadslaj!ljasxmHasjaojsxm!!'",
         length => 12
-    },
-    fast => 1,
+    }
 };
+
+set 'session_fast' => 1;
 
 # create a session
 my $session = Dancer::Session::ElasticSearch->create;
@@ -46,6 +68,9 @@ my $session = Dancer::Session::ElasticSearch->create;
 isa_ok $session, "Dancer::Session::ElasticSearch";
 
 my $id = $session->id;
+
+# create a new session
+$session->create;
 
 $session->flush;
 
