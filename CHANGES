@@ -1,3 +1,5 @@
+1.005           - Not available for perl version < 5.10
+
 1.004           - Faster sessions renamed "lazy"
 
 1.003           - Add support for faster sessions (don't hit ES for every

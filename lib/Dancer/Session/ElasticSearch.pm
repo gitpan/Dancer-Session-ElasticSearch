@@ -4,13 +4,13 @@ use strict;
 use warnings;
 use base 'Dancer::Session::Abstract';
 
+use v5.10.0;
 use Dancer qw(:syntax);
 use ElasticSearch;
 use Try::Tiny;
 use Digest::HMAC_SHA1 qw();
-use Data::Dump qw/pp/;
 
-our $VERSION   = 1.004;
+our $VERSION   = 1.005;
 our $es        = undef;
 our $data      = {};
 
@@ -156,6 +156,7 @@ Dancer::Session::ElasticSearch - L<ElasticSearch> based session engine for Dance
 
 This module implements a session engine storing session variables in an
 ElasticSearch index. It also signs IDs to thwart tampering and guessing.
+Requires perl version 5.10 or higher.
 
 =head1 USAGE
 

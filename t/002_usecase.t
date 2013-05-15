@@ -7,6 +7,8 @@ use Dancer qw(:syntax :tests);
 use Dancer::Session::ElasticSearch;
 use ElasticSearch::TestServer;
 
+BAIL_OUT 'Requires perl 5.10.0 or higher' if $] < 5.010;
+
 our $es;
 
 {

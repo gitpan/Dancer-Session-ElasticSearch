@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-
+use 5.010000;
 
 use ExtUtils::MakeMaker 6.30;
 
@@ -22,7 +22,6 @@ my %WriteMakefileArgs = (
   "PREREQ_PM" => {
     "Dancer" => 0,
     "Dancer::Session::Abstract" => 0,
-    "Data::Dump" => 0,
     "Digest::HMAC_SHA1" => 0,
     "ElasticSearch" => 0,
     "Try::Tiny" => 0,
@@ -34,7 +33,7 @@ my %WriteMakefileArgs = (
     "ElasticSearch::TestServer" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "1.004",
+  "VERSION" => "1.005",
   "test" => {
     "TESTS" => "t/*.t"
   }
