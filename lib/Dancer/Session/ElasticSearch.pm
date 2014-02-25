@@ -6,11 +6,11 @@ use base 'Dancer::Session::Abstract';
 
 use v5.10.0;
 use Dancer qw(:syntax);
-use ElasticSearch;
+use Elasticsearch;
 use Try::Tiny;
 use Digest::HMAC_SHA1 qw();
 
-our $VERSION   = 1.005;
+our $VERSION   = 1.006;
 our $es        = undef;
 our $data      = {};
 
@@ -98,7 +98,7 @@ sub _es {
 
     my $settings = setting('session_options');
 
-    $es = ElasticSearch->new( %{ $settings->{connection} } );
+    $es = Elasticsearch->new( %{ $settings->{connection} } );
     $es->use_type( $settings->{type}   // 'session' );
     $es->use_index( $settings->{index} // 'session' );
 
@@ -150,7 +150,7 @@ __END__
 
 =head1 NAME
 
-Dancer::Session::ElasticSearch - L<ElasticSearch> based session engine for Dancer
+Dancer::Session::ElasticSearch - L<Elasticsearch> based session engine for Dancer
 
 =head1 SYNOPSIS
 
@@ -199,13 +199,12 @@ Remove the current session object from ES
 
 =head2 is_lazy
 
-Accessor for the is_lazy C<session_option>. Is off by default.
-Switched off and every get/set call read/write from ES.
+Accessor for the is_lazy C<session_option>. Is off by default. When switched off
+every get/set call will read/write from ES, which can be expensive (access a
+variable or two and you make a get request to ES each time).
 
-If you switch it on, you need to call C<session->flush>
-yourself (in an after hook, for example) to save session data
-in the backend.
-
+If you switch it on, you will need to call C<flush> yourself (in an after
+hook, for example) to save session data to the backend.
 
 =head1 INTERNAL METHODS
 

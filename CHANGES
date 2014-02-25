@@ -1,3 +1,5 @@
+1.006           - Replace ElasticSearch with Elasticsearch
+
 1.005           - Not available for perl version < 5.10
 
 1.004           - Faster sessions renamed "lazy"
