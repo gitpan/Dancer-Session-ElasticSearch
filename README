@@ -1,9 +1,9 @@
 
 
 This archive contains the distribution Dancer-Session-ElasticSearch,
-version 1.006:
+version 1.007:
 
-  L<Elasticsearch> based session engine for Dancer
+  L<ElasticSearch> based session engine for Dancer
 
 This software is copyright (c) 2012 by Big Angry Blue Fish.
 

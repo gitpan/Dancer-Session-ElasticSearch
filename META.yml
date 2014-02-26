@@ -1,5 +1,5 @@
 ---
-abstract: 'L<Elasticsearch> based session engine for Dancer'
+abstract: 'L<ElasticSearch> based session engine for Dancer'
 author:
   - 'Big Angry Blue Fish <babf@cpan.org>'
 build_requires:
@@ -18,10 +18,10 @@ requires:
   Dancer: 0
   Dancer::Session::Abstract: 0
   Digest::HMAC_SHA1: 0
-  Elasticsearch: 0
+  ElasticSearch: 0
   Try::Tiny: 0
   base: 0
   perl: v5.10.0
   strict: 0
   warnings: 0
-version: 1.006
+version: 1.007

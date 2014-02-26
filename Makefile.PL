@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "L<Elasticsearch> based session engine for Dancer",
+  "ABSTRACT" => "L<ElasticSearch> based session engine for Dancer",
   "AUTHOR" => "Big Angry Blue Fish <babf\@cpan.org>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
@@ -24,7 +24,7 @@ my %WriteMakefileArgs = (
     "Dancer" => 0,
     "Dancer::Session::Abstract" => 0,
     "Digest::HMAC_SHA1" => 0,
-    "Elasticsearch" => 0,
+    "ElasticSearch" => 0,
     "Try::Tiny" => 0,
     "base" => 0,
     "strict" => 0,
@@ -34,7 +34,7 @@ my %WriteMakefileArgs = (
     "ElasticSearch::TestServer" => 0,
     "Test::More" => 0
   },
-  "VERSION" => "1.006",
+  "VERSION" => "1.007",
   "test" => {
     "TESTS" => "t/*.t"
   }
@@ -45,8 +45,8 @@ my %FallbackPrereqs = (
   "Dancer" => 0,
   "Dancer::Session::Abstract" => 0,
   "Digest::HMAC_SHA1" => 0,
+  "ElasticSearch" => 0,
   "ElasticSearch::TestServer" => 0,
-  "Elasticsearch" => 0,
   "Test::More" => 0,
   "Try::Tiny" => 0,
   "base" => 0,

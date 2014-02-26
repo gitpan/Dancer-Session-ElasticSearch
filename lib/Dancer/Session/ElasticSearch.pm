@@ -6,11 +6,11 @@ use base 'Dancer::Session::Abstract';
 
 use v5.10.0;
 use Dancer qw(:syntax);
-use Elasticsearch;
+use ElasticSearch;
 use Try::Tiny;
 use Digest::HMAC_SHA1 qw();
 
-our $VERSION   = 1.006;
+our $VERSION   = 1.007;
 our $es        = undef;
 our $data      = {};
 
@@ -98,7 +98,7 @@ sub _es {
 
     my $settings = setting('session_options');
 
-    $es = Elasticsearch->new( %{ $settings->{connection} } );
+    $es = ElasticSearch->new( %{ $settings->{connection} } );
     $es->use_type( $settings->{type}   // 'session' );
     $es->use_index( $settings->{index} // 'session' );
 
@@ -150,7 +150,7 @@ __END__
 
 =head1 NAME
 
-Dancer::Session::ElasticSearch - L<Elasticsearch> based session engine for Dancer
+Dancer::Session::ElasticSearch - L<ElasticSearch> based session engine for Dancer
 
 =head1 SYNOPSIS
 
